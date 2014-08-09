@@ -11,6 +11,8 @@ import android.widget.Toast;
 public class Game extends Activity {
 	
 	private static final String TAG = "MySudoku";
+	private static final String PREF_PUZZLE = "puzzle";
+	protected static final int DIFFICULTY_CONTINUE = -1;
 	public static final String KEY_DIFFICULTY = "com.example.mysudoku.difficulty";
 	public static final int DIFFICULTY_EASY = 0;
 	public static final int DIFFICULTY_MEDIUM = 1;
@@ -68,6 +70,7 @@ public class Game extends Activity {
 		puzzleView = new PuzzleView(this);
 		setContentView(puzzleView);
 		puzzleView.requestFocus();
+		getIntent().putExtra(KEY_DIFFICULTY, DIFFICULTY_CONTINUE);
 	}
 	protected void showKeypadOrError(int x, int y){
 		int tiles[] = getUsedTiles(x, y);
@@ -159,6 +162,9 @@ public class Game extends Activity {
 	private int[] getPuzzle(int diff){
 		String puz;
 		switch (diff) {
+		case DIFFICULTY_CONTINUE:
+			puz = getPreferences(MODE_PRIVATE).getString(PREF_PUZZLE, easyPuzzle);
+			break;
 		case DIFFICULTY_HARD:
 			puz = hardPuzzle;
 			break;
@@ -183,7 +189,10 @@ public class Game extends Activity {
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
+		Log.d(TAG, "onPause");
 	//	Music.stop(this);
+		
+		getPreferences(MODE_PRIVATE).edit().putString(PREF_PUZZLE, toPuzzleString(puzzle)).commit();
 	}
 	
 }
