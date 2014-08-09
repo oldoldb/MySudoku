@@ -33,6 +33,9 @@
             android:label="@string/settings_title" >
           
         </activity>
+        <activity 
+            android:name="com.example.mysudoku.Game"
+            android:label="@string/game_title" />
     </application>
 
 </manifest>

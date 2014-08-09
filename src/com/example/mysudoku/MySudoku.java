@@ -42,8 +42,10 @@ public class MySudoku extends Activity implements OnClickListener{
 			break;
 		case R.id.new_button:
 			openNewGameDialog();
+			 break;
 		case R.id.exit_button:
 			finish();
+			break;
 		default:
 			break;
 		}
@@ -63,6 +65,9 @@ public class MySudoku extends Activity implements OnClickListener{
 	
 	private void startGame(int i){
 		Log.d(TAG, "clicked on " + i);
+		Intent intent = new Intent(MySudoku.this, Game.class);
+		intent.putExtra(Game.KEY_DIFFICULTY, i);
+		startActivity(intent);
 	}
 
 	@Override
@@ -86,6 +91,20 @@ public class MySudoku extends Activity implements OnClickListener{
 			break;
 		}
 		return true;
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+	//	Music.play(this, R.raw.main);
+	}
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+	//	Music.stop(this);
 	}
 	
 	
